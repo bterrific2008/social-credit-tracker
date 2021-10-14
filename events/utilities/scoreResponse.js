@@ -1,6 +1,8 @@
+const fs = require('fs');
 const { MessageAttachment } = require('discord.js');
 const Canvas = require('canvas');
-const fs = require('fs');
+const Sequelize = require('sequelize');
+
 const attributeSettings = new Map();
 attributeSettings.set(
     'negative', 
@@ -42,7 +44,7 @@ let createSocialCreditImage = async function(score, attribute) {
 	return attachment;
 }
 
-let scoreResponse = async function (message, reaction) {
+let scoreResponse = async function (message, reaction, client) {
     // get the appropriate server's scores
     reaction = (Object.prototype.hasOwnProperty.call(reaction, message.guildId)) ? reaction[message.guildId] : reaction['default'];
 
@@ -57,7 +59,13 @@ let scoreResponse = async function (message, reaction) {
     for (response of responseActions) {
         let attribute = reaction[response]['attribute'];
         let score = reaction[response]['score'];
+        let sign = reaction[response]['sign'];
+        let product = (score*sign);
         let attachment = await createSocialCreditImage(score, attribute);
+
+        console.log(`${typeof product}`);
+        client.currency.add(message.author.id, product);
+     
         message.reply({ files: [attachment] });
     }
 }

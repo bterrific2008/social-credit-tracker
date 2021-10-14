@@ -3,6 +3,6 @@ const { scoreResponse } = require('./utilities/scoreResponse');
 module.exports = {
 	name: 'messageCreate',
 	execute(message, client) {
-		scoreResponse(message, client.socialCreditScores);
+		scoreResponse(message, client.socialCreditScores, client);
 	},
 };
