@@ -1,0 +1,12 @@
+{
+    "default": {
+        "hong kong": {
+            "attribute": "negative", 
+            "score": 100
+        },
+        "praise Chairman Mao": {
+            "attribute": "positive",
+            "score": 100
+        }
+    }
+}
